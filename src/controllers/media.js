@@ -132,4 +132,18 @@ const getPopularVideos = async (req, res) => {
   }
 };
 
-export default { create, mediaById, video, getPopularVideos };
+const getVideosByUser = async (req, res) => {
+  try {
+    let media = await Media.find({ postedBy: req.profile._id })
+      .populate("postedBy", "_id name")
+      .sort("-created")
+      .exec();
+    res.json(media);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+export default { create, mediaById, video, getPopularVideos, getVideosByUser };

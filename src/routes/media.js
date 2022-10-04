@@ -9,6 +9,7 @@ router.route("/new/:userId").post(auth.requireAuth, media.create);
 
 router.route("/video/:mediaId").get(media.video);
 router.route("/popular").get(media.getPopularVideos);
+router.route("/by/:userId").get(media.getVideosByUser);
 
 router.param("userId", user.userById);
 router.param("mediaId", media.mediaById);
