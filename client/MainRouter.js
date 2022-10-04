@@ -7,6 +7,7 @@ import { Signin } from "./components/auth/Signin";
 import { Profile } from "./components/user/Profile";
 import { PrivateRoute } from "./components/auth/PrivateRoute";
 import { EditProfile } from "./components/user/EditProfile";
+import { NewVideo } from "./components/media/NewVideo";
 
 export const MainRouter = () => {
   return (
@@ -25,6 +26,15 @@ export const MainRouter = () => {
           }
         />
         <Route path="/user/:userId" element={<Profile />} />
+
+        <Route
+          path="/media/new"
+          element={
+            <PrivateRoute>
+              <NewVideo />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </div>
   );

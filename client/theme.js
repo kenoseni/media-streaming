@@ -1,5 +1,5 @@
 import { createTheme } from "@material-ui/core/styles";
-import { blueGrey, red } from "@material-ui/core/colors";
+import { brown, red } from "@material-ui/core/colors";
 
 const theme = createTheme({
   typography: {
@@ -7,19 +7,19 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      light: "#4e5fdc",
-      main: "#283EDE",
-      dark: "#081aa0",
+      light: "#f05545",
+      main: "#b71c1c",
+      dark: "#7f0000",
       contrastText: "#fff",
     },
     secondary: {
-      light: "#f88f83",
-      main: "#F95D4B",
-      dark: "#f9240d",
-      contrastText: "#000",
+      light: "#fbfffc",
+      main: "#c8e6c9",
+      dark: "#97b498",
+      contrastText: "#37474f",
     },
-    openTitle: red["700"],
-    protectedTitle: red["700"],
+    openTitle: red["500"],
+    protectedTitle: brown["300"],
     type: "light",
   },
 });
