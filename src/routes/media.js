@@ -8,6 +8,7 @@ const router = express.Router();
 router.route("/new/:userId").post(auth.requireAuth, media.create);
 
 router.route("/video/:mediaId").get(media.video);
+router.route("/popular").get(media.getPopularVideos);
 
 router.param("userId", user.userById);
 router.param("mediaId", media.mediaById);

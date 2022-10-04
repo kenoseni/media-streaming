@@ -55,7 +55,6 @@ const mediaById = async (req, res, next, id) => {
     req.media = media;
     const files = await gridFs.find({ filename: media._id }).toArray();
 
-    console.log(">>>>>>>>>>>>>", files);
     if (!files[0]) {
       return res.status(404).send({
         error: "No video found",
@@ -118,4 +117,19 @@ const video = (req, res) => {
   }
 };
 
-export default { create, mediaById, video };
+const getPopularVideos = async (req, res) => {
+  try {
+    let media = await Media.find({})
+      .limit(12)
+      .populate("postedBy", "_id name")
+      .sort("-views")
+      .exec();
+    res.json(media);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+export default { create, mediaById, video, getPopularVideos };
