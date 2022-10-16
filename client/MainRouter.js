@@ -8,6 +8,8 @@ import { Profile } from "./components/user/Profile";
 import { PrivateRoute } from "./components/auth/PrivateRoute";
 import { EditProfile } from "./components/user/EditProfile";
 import { NewVideo } from "./components/media/NewVideo";
+import { Media } from "./components/media/Media";
+import { EditMedia } from "./components/media/EditMedia";
 
 export const MainRouter = () => {
   return (
@@ -35,6 +37,15 @@ export const MainRouter = () => {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/media/edit/:mediaId"
+          element={
+            <PrivateRoute>
+              <EditMedia />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/media/:mediaId" element={<Media />} />
       </Routes>
     </div>
   );

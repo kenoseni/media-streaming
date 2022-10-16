@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import fs from "fs";
+import extend from "lodash/extend";
 import formidable from "formidable";
 import errorHandler from "../helpers/error-handler";
 import { Media } from "../models/media";
@@ -146,4 +147,72 @@ const getVideosByUser = async (req, res) => {
   }
 };
 
-export default { create, mediaById, video, getPopularVideos, getVideosByUser };
+const incrementViews = async (req, res, next) => {
+  try {
+    await Media.findByIdAndUpdate(
+      req.media._id,
+      { $inc: { views: 1 } },
+      { new: true }
+    ).exec();
+    next();
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+const read = async (req, res) => {
+  return res.json(req.media);
+};
+
+const isPoster = (req, res, next) => {
+  let isPoster =
+    req.media && req.auth && req.media.postedBy._id == req.auth._id;
+  if (!isPoster) {
+    return res.status("403").json({
+      error: "User is not authorized to perform this operation",
+    });
+  }
+  next();
+};
+
+const update = async (req, res) => {
+  try {
+    let media = req.media;
+    media = extend(media, req.body);
+    media.updated = Date.now();
+    await media.save();
+    res.json(media);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+const remove = async (req, res) => {
+  try {
+    let media = req.media;
+    let deletedMedia = await media.remove();
+    gridFs.delete(req.file._id);
+    res.json(deletedMedia);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+export default {
+  create,
+  read,
+  update,
+  remove,
+  mediaById,
+  video,
+  getPopularVideos,
+  getVideosByUser,
+  incrementViews,
+  isPoster,
+};

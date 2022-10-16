@@ -69,7 +69,10 @@ export const MediaList = ({ videos }) => {
             <ImageListItemBar
               className={classes.tileBar}
               title={
-                <Link to={`/media/${video._id}`} className={classes.tileTitle}>
+                <Link
+                  to={{ pathname: `/media/${video._id}` }}
+                  className={classes.tileTitle}
+                >
                   {" "}
                   {video.title}{" "}
                 </Link>
@@ -88,4 +91,7 @@ export const MediaList = ({ videos }) => {
       </ImageList>
     </div>
   );
+};
+MediaList.propTypes = {
+  videos: PropTypes.array.isRequired,
 };
