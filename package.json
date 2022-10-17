@@ -5,7 +5,7 @@
   "main": "./dist/server.bundled.js",
   "scripts": {
     "development": "nodemon",
-    "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
+    "build": "webpack --config webpack.config.client.prod.js && webpack --mode=production --config webpack.config.server.js",
     "start": "NODE_ENV=production node ./dist/server.bundled.js"
   },
   "repository": {
